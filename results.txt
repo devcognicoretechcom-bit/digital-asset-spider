@@ -1,0 +1,7 @@
+URL: https://example.com, Status: 200, Abandoned: false
+URL: https://www.rust-lang.org, Status: 200, Abandoned: false
+URL: https://this-domain-does-not-exist-12345.com, Status: 0, Abandoned: true
+URL: https://example.com, Status: 200, Abandoned: false
+URL: https://www.rust-lang.org, Status: 200, Abandoned: false
+URL: https://google.com, Status: 200, Abandoned: false
+URL: https://this-domain-does-not-exist-12345.com, Status: 0, Abandoned: true

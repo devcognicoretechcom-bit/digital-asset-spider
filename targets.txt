@@ -1,0 +1,4 @@
+https://example.com
+https://www.rust-lang.org
+https://google.com
+https://this-domain-does-not-exist-12345.com

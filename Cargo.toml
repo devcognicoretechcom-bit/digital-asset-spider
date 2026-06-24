@@ -1,0 +1,13 @@
+[package]
+name = "digital_asset_spider"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tokio = { version = "1", features = ["full"] }
+reqwest = { version = "0.11", features = ["json"] }
+log = "0.4"
+env_logger = "0.10"
+axum = "0.7"
+serde = { version = "1.0", features = ["derive"] }
+tower-http = { version = "0.5", features = ["cors"] }
