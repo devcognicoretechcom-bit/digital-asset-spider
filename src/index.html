@@ -1,193 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CogniCoreTech Portal | Advanced Asset Intelligence</title>
+    <title>CogniCoreTech | Subscription Engine</title>
     <style>
-        :root {
-            --bg-dark: #090a0f;
-            --surface: #121420;
-            --primary: #00ff9d;
-            --primary-hover: #00cc7d;
-            --text: #f0f2f5;
-            --text-muted: #94a3b8;
-            --border: #222538;
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-dark);
-            color: var(--text);
-            line-height: 1.6;
-        }
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 40px;
-            background: rgba(18, 20, 32, 0.7);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 100;
-        }
-        .logo { font-size: 1.6rem; font-weight: 800; color: var(--primary); letter-spacing: 1px; }
-        nav a { color: var(--text-muted); text-decoration: none; margin-left: 20px; transition: 0.3s; font-weight: 500; }
-        nav a:hover, nav a.active { color: var(--primary); }
-        .auth-btn { background: transparent; border: 1px solid var(--primary); color: var(--primary); padding: 8px 18px; border-radius: 6px; cursor: pointer; transition: 0.3s; font-weight: 600; }
-        .auth-btn:hover { background: var(--primary); color: #000; }
-        
-        .main-container { max-width: 1200px; margin: 120px auto 60px; padding: 0 20px; }
-        
-        /* Hero section style */
-        .hero { text-align: center; padding: 60px 0 40px; }
-        .hero h1 { font-size: 3.5rem; font-weight: 800; margin-bottom: 20px; letter-spacing: -1px; }
-        .hero p { font-size: 1.25rem; color: var(--text-muted); max-width: 700px; margin: 0 auto 30px; }
-        
-        /* Dashboard view tabs */
-        .portal-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 30px; margin-top: 40px; }
-        .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 30px; position: relative; }
-        .card h2 { margin-bottom: 20px; font-size: 1.5rem; display: flex; align-items: center; justify-content: space-between; }
-        
-        /* Account Modal System simulation */
-        .auth-box { display: flex; flex-direction: column; gap: 15px; }
-        input { background: #090a0f; border: 1px solid var(--border); padding: 12px; border-radius: 6px; color: #fff; font-size: 1rem; width: 100%; }
-        input:focus { border-color: var(--primary); outline: none; }
-        .btn-full { background: var(--primary); color: #000; font-weight: 700; border: none; padding: 12px; border-radius: 6px; cursor: pointer; font-size: 1rem; transition: 0.3s; }
-        .btn-full:hover { background: var(--primary-hover); }
-        
-        /* Pricing / Subscription Matrix */
-        .pricing-section { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 40px; }
-        .tier { border: 1px solid var(--border); background: rgba(255,255,255,0.02); border-radius: 8px; padding: 20px; text-align: center; transition: 0.3s; }
-        .tier.premium { border-color: var(--primary); background: rgba(0, 255, 157, 0.03); }
-        .price { font-size: 2rem; font-weight: bold; color: #fff; margin: 15px 0; }
-        .price span { font-size: 1rem; color: var(--text-muted); }
-        
-        /* Execution feedback box */
-        #statusFeedback { font-weight: 600; margin-top: 15px; text-align: center; }
-        .success-text { color: var(--primary); }
-        .error-text { color: #ff4a4a; }
-        
-        pre { background: #090a0f; padding: 15px; border-radius: 8px; border: 1px solid var(--border); color: #a6e22e; overflow-x: auto; font-family: 'Courier New', Courier, monospace; font-size: 0.9rem; text-align: left; }
+        body { font-family: sans-serif; background: #000; color: #fff; text-align: center; padding: 50px; }
+        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 900px; margin: 40px auto; }
+        .card { border: 1px solid #333; padding: 20px; border-radius: 10px; }
+        button { cursor: pointer; padding: 10px; background: #00ff9d; border: none; border-radius: 5px; font-weight: bold; }
     </style>
 </head>
 <body>
-
-    <header>
-        <div class="logo">CogniCoreTech</div>
-        <nav>
-            <a href="#" class="active">Platform Dashboard</a>
-            <a href="/docs" target="_blank">Engine API Reference</a>
-            <button class="auth-btn" onclick="toggleAuthMode()">Sign In / Register</button>
-        </nav>
-    </header>
-
-    <div class="main-container">
-        <section class="hero">
-            <h1>Industrial Data Stream Core</h1>
-            <p>Deploy persistent spider instances, scale deep analytical query telemetry, and power your corporate assets globally.</p>
-        </section>
-
-        <div class="portal-grid">
-            <!-- Left Side: Interactive API Sandbox & Instruction Set -->
-            <div class="card">
-                <h2>Product Operations & Integration Guide</h2>
-                <p style="margin-bottom: 20px; color: var(--text-muted);">
-                    Authenticate securely to acquire an persistent API key bearer string. You can configure automatic metered pipelines using the schema instructions blueprint down below:
-                </p>
-                
-                <h3 style="margin-bottom: 10px; color: var(--primary);">Secure Integration Terminal Instance</h3>
-                <pre>
-POST https://cognicoretech.com/api/v1/request-access
-Content-Type: application/json
-Authorization: Bearer YOUR_SUBSCRIBER_TOKEN
-
-{
-  "email": "enterprise-agent@yourcompany.com"
-}</pre>
-                
-                <h3 style="margin-top: 30px; margin-bottom: 15px;">Choose Commercial Account Subscription Level</h3>
-                <div class="pricing-section">
-                    <div class="tier">
-                        <h4>Sandbox Tier</h4>
-                        <div class="price">$0<span>/mo</span></div>
-                        <p style="font-size: 0.85rem; color: var(--text-muted);">1,000 requests monthly token metrics tracking.</p>
-                    </div>
-                    <div class="tier premium">
-                        <h4>Enterprise Growth</h4>
-                        <div class="price">$3,500<span>/mo</span></div>
-                        <p style="font-size: 0.85rem; color: var(--primary);">Unlimited automated high-velocity cluster crawling nodes.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Right Side: Reactive Log In / Lead Access Panel -->
-            <div class="card" style="height: fit-content;">
-                <h2 id="authTitle">Create Gateway Account</h2>
-                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;" id="authDesc">
-                    Register your executive email address to authorize metered enterprise accounts.
-                </p>
-                
-                <form id="saasPortalForm" class="auth-box">
-                    <input type="email" id="userEmail" placeholder="Enter business executive email" required>
-                    <input type="password" id="userPass" placeholder="Generate secure user secret key (Password)" required>
-                    <button type="submit" class="btn-full" id="submitBtn">Activate Asset Workspace</button>
-                </form>
-                
-                <div id="statusFeedback"></div>
-            </div>
-        </div>
+    <h1>Select Your CogniCore Plan</h1>
+    <div class="grid">
+        <div class="card"><h3>Free</h3><button onclick="subscribe('free')">Select</button></div>
+        <div class="card"><h3>Pro</h3><button onclick="subscribe('pro')">Select</button></div>
+        <div class="card"><h3>Premium</h3><button onclick="subscribe('premium')">Select</button></div>
     </div>
-
+    <p id="msg"></p>
     <script>
-        let isSignUpMode = true;
-        
-        function toggleAuthMode() {
-            isSignUpMode = !isSignUpMode;
-            const title = document.getElementById('authTitle');
-            const desc = document.getElementById('authDesc');
-            const btn = document.getElementById('submitBtn');
-            
-            if(isSignUpMode) {
-                title.innerText = "Create Gateway Account";
-                desc.innerText = "Register your executive email address to authorize metered enterprise accounts.";
-                btn.innerText = "Activate Asset Workspace";
-            } else {
-                title.innerText = "Access Executive Suite";
-                desc.innerText = "Provide corporate master parameters to enter your production dashboard.";
-                btn.innerText = "Authorize Workspace Link";
-            }
+        async function subscribe(plan) {
+            const email = prompt("Enter your corporate email:");
+            if(!email) return;
+            const res = await fetch('/api/v1/subscribe', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ email, plan })
+            });
+            const data = await res.json();
+            document.getElementById('msg').innerText = data.message;
         }
-
-        document.getElementById('saasPortalForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const email = document.getElementById('userEmail').value;
-            const feedback = document.getElementById('statusFeedback');
-            
-            feedback.innerHTML = "Processing infrastructure registration parameters...";
-            feedback.className = "";
-
-            try {
-                const res = await fetch('/api/v1/request-access', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email: email })
-                });
-                
-                const data = await res.json();
-                
-                if (data.status === "success") {
-                    feedback.innerHTML = `<span class="success-text">✔ ${data.message} Dashboard provisioned!</span>`;
-                } else {
-                    feedback.innerHTML = `<span class="error-text">❌ Authorization fault encountered.</span>`;
-                }
-            } catch (err) {
-                feedback.innerHTML = `<span class="error-text">❌ Connection interruption to CogniCore cluster.</span>`;
-            }
-        });
     </script>
 </body>
 </html>
