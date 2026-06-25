@@ -1,33 +1,38 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>CogniCoreTech | Subscription Engine</title>
     <style>
-        body { font-family: sans-serif; background: #000; color: #fff; text-align: center; padding: 50px; }
-        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 900px; margin: 40px auto; }
-        .card { border: 1px solid #333; padding: 20px; border-radius: 10px; }
-        button { cursor: pointer; padding: 10px; background: #00ff9d; border: none; border-radius: 5px; font-weight: bold; }
+        body { font-family: 'Segoe UI', sans-serif; background: #000; color: #fff; padding: 40px; }
+        .hero { max-width: 800px; margin: auto; text-align: center; }
+        .plans { display: flex; gap: 20px; justify-content: center; margin-top: 40px; }
+        .plan-card { border: 1px solid #444; padding: 20px; border-radius: 8px; width: 200px; }
+        button { background: #00ff9d; border: none; padding: 10px; border-radius: 4px; cursor: pointer; width: 100%; margin-top: 10px; }
     </style>
 </head>
 <body>
-    <h1>Select Your CogniCore Plan</h1>
-    <div class="grid">
-        <div class="card"><h3>Free</h3><button onclick="subscribe('free')">Select</button></div>
-        <div class="card"><h3>Pro</h3><button onclick="subscribe('pro')">Select</button></div>
-        <div class="card"><h3>Premium</h3><button onclick="subscribe('premium')">Select</button></div>
+    <div class="hero">
+        <h1>CogniCoreTech</h1>
+        <p>We solve enterprise data fragmentation by automating high-velocity asset intelligence, replacing slow manual analysis with real-time, structured stream processing.</p>
+        <div id="signup">
+            <input type="email" id="email" placeholder="Enter corporate email" style="padding: 10px; width: 300px;">
+        </div>
     </div>
-    <p id="msg"></p>
+    <div class="plans">
+        <div class="plan-card"><h3>Free</h3><p>100 requests</p><button onclick="join('free')">Select</button></div>
+        <div class="plan-card"><h3>Pro</h3><p>5,000 requests</p><button onclick="join('pro')">Select</button></div>
+        <div class="plan-card"><h3>Premium</h3><p>Unlimited</p><button onclick="join('premium')">Select</button></div>
+    </div>
+    <h3 id="status"></h3>
     <script>
-        async function subscribe(plan) {
-            const email = prompt("Enter your corporate email:");
-            if(!email) return;
-            const res = await fetch('/api/v1/subscribe', {
+        async function join(plan) {
+            const email = document.getElementById('email').value;
+            if(!email) return alert("Enter email first");
+            const res = await fetch('/api/register', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({ email, plan })
             });
-            const data = await res.json();
-            document.getElementById('msg').innerText = data.message;
+            document.getElementById('status').innerText = await res.text();
         }
     </script>
 </body>
