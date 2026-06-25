@@ -6,10 +6,15 @@ use utoipa::{OpenApi, ToSchema};
 use utoipa_swagger_ui::SwaggerUi;
 
 #[derive(Serialize, ToSchema)]
-struct ApiResponse { message: String, status: String }
+struct ApiResponse { 
+    message: String, 
+    status: String 
+}
 
 #[derive(Deserialize, ToSchema)]
-struct AccessRequest { email: String }
+struct AccessRequest { 
+    email: String 
+}
 
 #[derive(OpenApi)]
 #[openapi(
@@ -40,9 +45,9 @@ async fn main() {
     responses((status = 200, body = ApiResponse))
 )]
 async fn handle_request(Json(payload): Json<AccessRequest>) -> Json<ApiResponse> {
-    println!("--- New Enterprise Lead: {}", payload.email);
+    println!("--- SaaS Subscription Lifecycle Triggered for: {}", payload.email);
     Json(ApiResponse {
-        message: "Request received. Enterprise team notified.".to_string(),
+        message: "SaaS Workspace initialized successfully.".to_string(),
         status: "success".to_string(),
     })
 }
