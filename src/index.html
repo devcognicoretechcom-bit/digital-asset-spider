@@ -2,34 +2,30 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>CogniCoreTech | Enterprise Portal</title>
+    <title>CogniCoreTech | API Integration Portal</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background: #0a0a0a; color: #fff; text-align: center; padding: 100px 20px; }
-        h1 { font-size: 3rem; color: #00ff9d; }
-        input { padding: 10px; width: 250px; border-radius: 4px; border: none; }
-        button { padding: 10px 20px; background: #00ff9d; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        body { font-family: 'Segoe UI', sans-serif; background: #0a0a0a; color: #fff; padding: 50px; }
+        .container { max-width: 800px; margin: auto; }
+        h1, h2 { color: #00ff9d; }
+        pre { background: #1e1e1e; padding: 15px; border-radius: 5px; color: #f8f8f2; overflow-x: auto; }
+        .cta-btn { display: inline-block; padding: 10px 20px; background: #00ff9d; color: #000; text-decoration: none; border-radius: 5px; font-weight: bold; }
     </style>
 </head>
 <body>
-    <h1>CogniCoreTech</h1>
-    <p>Enterprise Digital Asset Intelligence.</p>
-    <form id="accessForm">
-        <input type="email" id="email" placeholder="Enter your corporate email" required>
-        <button type="submit">Request Access</button>
-    </form>
-    <p id="responseMessage"></p>
-    <script>
-        document.getElementById('accessForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const email = document.getElementById('email').value;
-            const res = await fetch('/api/v1/request-access', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email })
-            });
-            const data = await res.json();
-            document.getElementById('responseMessage').innerText = data.message;
-        });
-    </script>
+    <div class="container">
+        <h1>CogniCoreTech</h1>
+        <p>Enterprise Digital Asset Intelligence.</p>
+        
+        <h2>Getting Started</h2>
+        <p>To integrate our data engine, send a POST request to our secure endpoint:</p>
+        <pre>POST https://cognicoretech.com/api/v1/request-access
+Content-Type: application/json
+
+{
+  "email": "your-corporate-email@example.com"
+}</pre>
+        <br>
+        <a href="/docs" class="cta-btn">View Full API Documentation</a>
+    </div>
 </body>
 </html>
