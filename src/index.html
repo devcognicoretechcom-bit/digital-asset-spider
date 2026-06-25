@@ -13,9 +13,23 @@
 <body>
     <h1>CogniCoreTech</h1>
     <p>Enterprise Digital Asset Intelligence.</p>
-    <form action="/request-access" method="POST">
-        <input type="email" name="email" placeholder="Enter your corporate email" required>
+    <form id="accessForm">
+        <input type="email" id="email" placeholder="Enter your corporate email" required>
         <button type="submit">Request Access</button>
     </form>
+    <p id="responseMessage"></p>
+    <script>
+        document.getElementById('accessForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const res = await fetch('/api/v1/request-access', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email })
+            });
+            const data = await res.json();
+            document.getElementById('responseMessage').innerText = data.message;
+        });
+    </script>
 </body>
 </html>
