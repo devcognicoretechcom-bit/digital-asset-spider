@@ -1,53 +1,20 @@
-use axum::{routing::post, Json, Router};
-use serde::{Deserialize, Serialize};
+use axum::{routing::get, Router};
 use std::net::SocketAddr;
-use log::{info};
-use tower_http::cors::{Any, CorsLayer};
-
-#[derive(Deserialize)]
-struct ScanRequest {
-    url: String,
-}
-
-#[derive(Serialize)]
-struct ScanResponse {
-    url: String,
-    status: String,
-}
+use std::env;
 
 #[tokio::main]
 async fn main() {
-    env_logger::init();
+    // Read the PORT from the environment (defaulting to 10000 for Render)
+    let port = env::var("PORT").unwrap_or_else(|_| "10000".to_string());
     
-    // Configure CORS to allow your browser to talk to the API
-    let cors = CorsLayer::new()
-        .allow_origin(Any)
-        .allow_methods(Any)
-        .allow_headers(Any);
+    // Bind to 0.0.0.0 to accept traffic from the public internet
+    let addr_str = format!("0.0.0.0:{}", port);
+    let addr: SocketAddr = addr_str.parse().expect("Invalid address configuration");
 
-    let app = Router::new()
-        .route("/scan", post(scan_handler))
-        .layer(cors);
+    let app = Router::new().route("/", get(|| async { "API Server is running" }));
 
-    let addr = SocketAddr::from(([127, 0, 0, 1], 3000));
-    info!("--- API Server listening on {}", addr);
-    
+    println!("--- API Server listening on {}", addr);
+
     let listener = tokio::net::TcpListener::bind(addr).await.unwrap();
     axum::serve(listener, app).await.unwrap();
-}
-
-async fn scan_handler(Json(payload): Json<ScanRequest>) -> Json<ScanResponse> {
-    info!("Received scan request for: {}", payload.url);
-    let status = check_asset(&payload.url).await;
-    Json(ScanResponse {
-        url: payload.url,
-        status,
-    })
-}
-
-async fn check_asset(url: &str) -> String {
-    match reqwest::get(url).await {
-        Ok(res) => res.status().to_string(),
-        Err(_) => "Error/Down".to_string(),
-    }
 }
